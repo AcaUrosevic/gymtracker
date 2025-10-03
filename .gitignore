@@ -1,0 +1,59 @@
+# --- OS / general
+.DS_Store
+Thumbs.db
+*.log
+spring.log
+
+# --- IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+
+# --- Java / Maven
+**/target/
+HELP.md
+
+
+# --- H2
+*.h2.db
+*.mv.db
+
+# --- Env fajlovi
+.env
+.env.*
+server/.env
+client/.env
+client/.env.*
+
+# --- Frontend
+client/node_modules/
+client/dist/
+client/build/
+client/.vite/
+client/.next/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- NetBeans/STS/Gradle
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+!**/src/main/**/target/
+!**/src/test/**/target/

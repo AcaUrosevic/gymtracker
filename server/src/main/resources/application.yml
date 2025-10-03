@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: gymtracker
+server:
+  port: 8080
