@@ -1,4 +1,4 @@
-package rc.ac.fon.gymtracker;
+package rs.ac.fon.gymtracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
