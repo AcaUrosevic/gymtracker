@@ -39,4 +39,7 @@ public class TrainingRecord {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<TrainingRecordItem> items = new java.util.ArrayList<>();
 }
