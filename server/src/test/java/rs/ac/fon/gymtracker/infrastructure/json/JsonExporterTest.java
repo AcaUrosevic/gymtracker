@@ -40,12 +40,9 @@ class JsonExporterTest {
 
         Path out = tempDir.resolve("training-record.json");
 
-
-        // act
         JsonExporter.write(out, tr);
         System.out.println(Files.readString(out));
 
-        // assert – parsiramo umesto string contains
         var mapper = new ObjectMapper().findAndRegisterModules();
         JsonNode root = mapper.readTree(out.toFile());
 
