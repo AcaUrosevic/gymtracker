@@ -10,4 +10,14 @@ public final class TrainerMapper {
         return new TrainerDto(t.getId(), t.getFirstName(), t.getLastName(), t.getEmail(), t.getUsername());
     }
 
+    public static Trainer toEntity(TrainerDto dto) {
+        var e = new Trainer();
+        e.setId(dto.id());
+        e.setFirstName(dto.firstName());
+        e.setLastName(dto.lastName());
+        e.setEmail(dto.email());
+        e.setUsername(dto.username());
+        return e;
+    }
+
 }
