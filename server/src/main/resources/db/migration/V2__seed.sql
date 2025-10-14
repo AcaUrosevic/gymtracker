@@ -6,8 +6,8 @@ INSERT INTO service_package (name, description, duration_days, price) VALUES
                                                                           ('Annual',   '365 days access', 365, 25000);
 
 INSERT INTO trainer (first_name, last_name, email, username, password_hash) VALUES
-                                                                                ('Marko', 'Marković', 'marko@fit.rs', 'marko', '$2a$10$8wQhIhQeK1y4yBf.1b7e2O0b8r7yFQb5mTxo2a7G9h9n9o7p2QmRy'),
-                                                                                ('Ana',   'Jovanović','ana@fit.rs',   'ana',   '$2a$10$0r4L8q0R6aQv2o0kH5m2JuwIs6g9e4p1JY7O0PHc1x9i6n8smP1qS');
+                                                                                ('Marko', 'Marković', 'marko@fit.rs', 'marko', '$2a$10$jA04aO5MJxhVhOP90cce/eXa0QZ193g3gIc0DHLzczMe5.aI/8T3K'),
+                                                                                ('Ana',   'Jovanović','ana@fit.rs',   'ana',   '$2a$10$DQvElIY4QAgrbjlo5geq/.O0lFFPyYfUWBYc/9SY/tt.qZvmTKHK6');
 
 INSERT INTO certificate (name, type) VALUES
                                          ('ACE CPT', 'PT'),

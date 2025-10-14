@@ -9,6 +9,7 @@ import rs.ac.fon.gymtracker.service.TrainingRecordService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,7 +37,6 @@ public class TrainingRecordServiceImpl
     @Override
     protected TrainingRecord doMergeAndSave(TrainingRecord current, TrainingRecord patch) {
         if (patch.getTrainingDate() != null) current.setTrainingDate(patch.getTrainingDate());
-        // intensity se računa, ne prepisuje se iz patch-a
         if (patch.getTrainer() != null) current.setTrainer(patch.getTrainer());
         if (patch.getMember() != null)  current.setMember(patch.getMember());
         return repo.save(current);
@@ -59,7 +59,6 @@ public class TrainingRecordServiceImpl
         var rec = repo.findById(recordId).orElseThrow();
         var ex  = exerciseRepo.findById(exerciseId).orElseThrow();
 
-        // odredi sledeći rb (1..n)
         int nextRb = rec.getItems().size() + 1;
 
         var item = new TrainingRecordItem();
@@ -73,7 +72,7 @@ public class TrainingRecordServiceImpl
         var saved = itemRepo.save(item);
         rec.getItems().add(saved);
 
-        recalcIntensity(recordId); // automatski osveži intenzitet
+        recalcIntensity(recordId);
         return saved;
     }
 
@@ -92,6 +91,8 @@ public class TrainingRecordServiceImpl
     public List<TrainingRecord> listByMember(Long memberId) {
         return repo.findByMemberIdOrderByTrainingDateDesc(memberId);
     }
+
+
 
     @Override
     @Transactional(readOnly = true)
