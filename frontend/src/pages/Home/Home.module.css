@@ -1,0 +1,15 @@
+.page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(1000px 700px at 70% -20%, #122134 0%, #0b0f14 55%),
+    #0b0f14;
+}
+.card {
+  width: min(720px, 92%);
+  padding: 28px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #11161c, #161c23);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}

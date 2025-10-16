@@ -24,3 +24,8 @@ spring:
     locations: classpath:db/migration
     validate-on-migrate: true
     clean-disabled: true
+
+app:
+  jwt:
+    secret: "a3a1f07a1c6b4d298b0cf5de14b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f70819"
+    expiration: 3600000

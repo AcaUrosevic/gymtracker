@@ -5,18 +5,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.fon.gymtracker.api.dto.TrainerDto;
 import rs.ac.fon.gymtracker.api.mapper.TrainerMapper;
+import rs.ac.fon.gymtracker.infrastructure.security.JwtUtil;
 import rs.ac.fon.gymtracker.service.TrainerService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/trainers")
 @RequiredArgsConstructor
 public class TrainerController {
     private final TrainerService service;
+    private final JwtUtil jwtUtil;
 
     public record LoginRequest(@NotBlank String username, @NotBlank String password) {}
 
@@ -51,8 +54,19 @@ public class TrainerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TrainerDto> login(@Valid @RequestBody LoginRequest req) {
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequest req) {
         var t = service.login(req.username(), req.password());
-        return ResponseEntity.ok(TrainerMapper.toDto(t));
+        var userDto = TrainerMapper.toDto(t);
+
+        var token = jwtUtil.generate(
+                t.getUsername(),
+                Map.of("uid", t.getId(), "fn", t.getFirstName(), "ln", t.getLastName())
+        );
+
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "user", userDto
+        ));
     }
+
 }
