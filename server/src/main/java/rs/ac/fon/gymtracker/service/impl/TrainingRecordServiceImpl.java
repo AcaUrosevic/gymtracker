@@ -1,5 +1,7 @@
 package rs.ac.fon.gymtracker.service.impl;
 
+
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ac.fon.gymtracker.domain.*;
@@ -8,8 +10,8 @@ import rs.ac.fon.gymtracker.repository.*;
 import rs.ac.fon.gymtracker.service.TrainingRecordService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -110,5 +112,95 @@ public class TrainingRecordServiceImpl
         itemRepo.deleteById(itemId);
         var recId = itemId.getRecordId();
         recalcIntensity(recId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrainingRecord> search(Long trainerId,
+                                       Long memberId,
+                                       Long exerciseId,
+                                       LocalDate from,
+                                       LocalDate to) {
+
+        final List<Specification<TrainingRecord>> andSpecs = new ArrayList<>();
+
+        if (trainerId != null) {
+            andSpecs.add((root, query, cb) -> cb.equal(root.get("trainer").get("id"), trainerId));
+        }
+        if (memberId != null) {
+            andSpecs.add((root, query, cb) -> cb.equal(root.get("member").get("id"), memberId));
+        }
+        if (from != null) {
+            andSpecs.add((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("trainingDate"), from));
+        }
+        if (to != null) {
+            andSpecs.add((root, query, cb) -> cb.lessThanOrEqualTo(root.get("trainingDate"), to));
+        }
+        if (exerciseId != null) {
+            andSpecs.add((root, query, cb) -> {
+                assert query != null;
+                var sub =   query.subquery(Long.class);
+                var item = sub.from(TrainingRecordItem.class);
+                sub.select(item.get("id").get("recordId"))
+                        .where(
+                                cb.equal(item.get("id").get("recordId"), root.get("id")),
+                                cb.equal(item.get("exercise").get("id"), exerciseId)
+                        );
+                return cb.exists(sub);
+            });
+        }
+
+        if (andSpecs.isEmpty()) {
+            var all = repo.findAll();
+            all.sort((a, b) -> b.getTrainingDate().compareTo(a.getTrainingDate()));
+            return all;
+        }
+
+        var spec = Specification.allOf(andSpecs);
+        var list = repo.findAll(spec);
+        list.sort((a, b) -> b.getTrainingDate().compareTo(a.getTrainingDate()));
+        return list;
+    }
+
+    @Override
+    public TrainingRecord updateRecord(Long id,
+                                       LocalDate date,
+                                       Long trainerId,
+                                       Long memberId,
+                                       List<ItemInput> items) {
+        var rec = repo.findById(id).orElseThrow();
+
+        var tr = trainerRepo.findById(trainerId).orElseThrow();
+        var m  = memberRepo.findById(memberId).orElseThrow();
+        rec.setTrainingDate(date);
+        rec.setTrainer(tr);
+        rec.setMember(m);
+
+        rec.getItems().clear();
+
+        int rb = 1;
+        if (items != null) {
+            for (var it : items) {
+                var ex = exerciseRepo.findById(it.exerciseId()).orElseThrow();
+
+                var item = new TrainingRecordItem();
+                item.setId(new TrainingRecordItemId(rec.getId(), rb++));
+                item.setRecord(rec);
+                item.setExercise(ex);
+                item.setSets(it.sets());
+                item.setReps(it.reps());
+                item.setWeight(it.weight());
+
+                rec.getItems().add(item);
+            }
+        }
+
+        double sum = rec.getItems().stream()
+                .mapToDouble(i -> i.getSets() * i.getReps() * i.getWeight() * i.getExercise().getEffort())
+                .sum();
+        rec.setIntensity(sum);
+
+        var saved = repo.save(rec);
+        return repo.findById(saved.getId()).orElseThrow();
     }
 }

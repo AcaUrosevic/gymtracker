@@ -1,11 +1,13 @@
 package rs.ac.fon.gymtracker.api.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.fon.gymtracker.api.dto.TrainingRecordDto;
 import rs.ac.fon.gymtracker.api.dto.TrainingRecordItemDto;
 import rs.ac.fon.gymtracker.api.mapper.TrainingRecordMapper;
+import rs.ac.fon.gymtracker.domain.id.TrainingRecordItemId;
 import rs.ac.fon.gymtracker.service.TrainingRecordService;
 
 import jakarta.validation.Valid;
@@ -23,6 +25,13 @@ public class TrainingRecordController {
 
     public record CreateRecordRequest(@NotNull LocalDate date, @NotNull Long trainerId, @NotNull Long memberId) {}
     public record AddItemRequest(@NotNull Long exerciseId, int sets, int reps, double weight) {}
+
+    @GetMapping
+    public List<TrainingRecordDto> listAll() {
+        return service.findAll().stream()
+                .map(TrainingRecordMapper::toDto)
+                .toList();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<TrainingRecordDto> get(@PathVariable Long id) {
@@ -70,7 +79,40 @@ public class TrainingRecordController {
 
     @DeleteMapping("/{recordId}/items/{rb}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long recordId, @PathVariable Integer rb) {
-        service.deleteItem(new rs.ac.fon.gymtracker.domain.id.TrainingRecordItemId(recordId, rb));
+        service.deleteItem(new TrainingRecordItemId(recordId, rb));
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public List<TrainingRecordDto> search(
+            @RequestParam(required = false) Long trainerId,
+            @RequestParam(required = false) Long memberId,
+            @RequestParam(required = false) Long exerciseId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+    ) {
+        return service.search(trainerId, memberId, exerciseId, from, to)
+                .stream().map(TrainingRecordMapper::toDto).toList();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TrainingRecordDto> update(@PathVariable Long id,
+                                                    @Valid @RequestBody UpdateRecordRequest req) {
+        var updated = service.updateRecord(
+                id, req.date(), req.trainerId(), req.memberId(),
+                req.items().stream()
+                        .map(i -> new TrainingRecordService.ItemInput(i.exerciseId(), i.sets(), i.reps(), i.weight()))
+                        .toList()
+        );
+        return ResponseEntity.ok(TrainingRecordMapper.toDto(updated));
+    }
+
+    public record UpdateRecordRequest(
+            @NotNull LocalDate date,
+            @NotNull Long trainerId,
+            @NotNull Long memberId,
+            @NotNull List<UpdateItem> items
+    ) {
+        public record UpdateItem(@NotNull Long exerciseId, int sets, int reps, double weight) {}
     }
 }
