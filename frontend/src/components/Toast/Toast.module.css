@@ -1,0 +1,34 @@
+.stack {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  display: grid;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.toast {
+  background: linear-gradient(180deg, #11161c, #161c23);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f2f5f9;
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+}
+
+.close {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #a9b1bb;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.close:hover {
+  color: #f2f5f9;
+}
