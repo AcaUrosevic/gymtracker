@@ -1,5 +1,7 @@
 package rs.ac.fon.gymtracker.service.impl;
 
+import jakarta.persistence.criteria.JoinType;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ac.fon.gymtracker.domain.Member;
@@ -7,6 +9,7 @@ import rs.ac.fon.gymtracker.repository.MemberRepository;
 import rs.ac.fon.gymtracker.repository.ServicePackageRepository;
 import rs.ac.fon.gymtracker.service.MemberService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,7 +44,28 @@ public class MemberServiceImpl
 
     @Override
     @Transactional(readOnly = true)
-    public List<Member> searchByName(String query) {
-        return repo.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(query, query);
+    public List<Member> search(String q, Long packageId) {
+        final List<Specification<Member>> specs = new ArrayList<>();
+
+        if (q != null && !q.isBlank()) {
+            final String like = "%" + q.toLowerCase() + "%";
+
+            Specification<Member> textSpec = Specification.anyOf(
+                    (root, cq, cb) -> cb.like(cb.lower(root.get("firstName")), like),
+                    (root, cq, cb) -> cb.like(cb.lower(root.get("lastName")),  like),
+                    (root, cq, cb) -> cb.like(cb.lower(cb.coalesce(root.get("email"), "")), like)
+            );
+
+            specs.add(textSpec);
+        }
+
+        if (packageId != null) {
+            Specification<Member> pkgSpec = (root, cq, cb) ->
+                    cb.equal(root.join("servicePackage", JoinType.LEFT).get("id"), packageId);
+            specs.add(pkgSpec);
+        }
+
+        Specification<Member> finalSpec = Specification.allOf(specs);
+        return repo.findAll(finalSpec);
     }
 }
