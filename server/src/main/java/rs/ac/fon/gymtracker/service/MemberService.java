@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface MemberService extends BaseCrudService<Member, Long> {
     Member changePackage(Long memberId, Long packageId);
-    List<Member> searchByName(String query);
+    List<Member> search(String q, Long packageId);
 }

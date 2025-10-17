@@ -6,7 +6,6 @@ import styles from "./Home.module.css";
 export default function Home() {
   return (
     <>
-      {/* HERO */}
       <section className={styles.hero}>
         <Container>
           <div className={styles.heroGrid}>
@@ -17,16 +16,15 @@ export default function Home() {
                 papirologije.
               </p>
               <div className={styles.actions}>
-                <Button as="a" href="/treneri">
+                <Button as="a" href="/trainers">
                   Pogledaj trenere
                 </Button>
-                <Button as="a" href="/clanovi" variant="ghost">
+                <Button as="a" href="/members" variant="ghost">
                   Lista članova
                 </Button>
               </div>
             </div>
 
-            {/* Placeholder za sliku hero sekcije */}
             <div
               className={styles.heroImage}
               aria-label="hero image placeholder"
@@ -37,7 +35,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* FEATURES */}
       <section className={styles.features}>
         <Container>
           <div className={styles.grid}>
@@ -64,7 +61,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* IMAGE STRIP (placeholders) */}
       <section className={styles.strip}>
         <Container>
           <div className={styles.stripGrid}>
@@ -81,14 +77,14 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* CTA */}
       <section className={styles.cta}>
         <Container>
           <div className={styles.ctaCard}>
             <h2>Spreman za organizovanije treninge?</h2>
             <p>Zapocni sa evidencijom i planiranjem u par klikova.</p>
+
             <div className={styles.actions}>
-              <Button as="a" href="/raspored">
+              <Button as="a" href="/training-records">
                 Otvori raspored
               </Button>
               <Button as="a" href="/about" variant="ghost">

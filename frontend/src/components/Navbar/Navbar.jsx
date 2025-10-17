@@ -19,13 +19,13 @@ export default function Navbar() {
       <NavLink to="/" className={link}>
         Početna
       </NavLink>
-      <NavLink to="/treneri" className={link}>
+      <NavLink to="/trainers" className={link}>
         Treneri
       </NavLink>
-      <NavLink to="/clanovi" className={link}>
+      <NavLink to="/members" className={link}>
         Članovi
       </NavLink>
-      <NavLink to="/raspored" className={link}>
+      <NavLink to="/training-records" className={link}>
         Raspored
       </NavLink>
 

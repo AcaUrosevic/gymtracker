@@ -56,4 +56,15 @@ public class MemberController {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search")
+    public List<MemberDto> search(
+            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "packageId", required = false) Long packageId
+    ) {
+        var list = service.search(q, packageId);
+        return list.stream().map(MemberMapper::toDto).toList();
+    }
+
+
 }
