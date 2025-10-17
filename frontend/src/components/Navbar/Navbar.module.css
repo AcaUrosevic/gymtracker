@@ -1,0 +1,42 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.link {
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--muted);
+  transition: 160ms ease;
+}
+.link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+.active {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 6px;
+}
+.who {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.logout {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: 160ms ease;
+}
+.logout:hover {
+  background: rgba(255, 255, 255, 0.06);
+}

@@ -1,15 +1,94 @@
-.page {
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: radial-gradient(1000px 700px at 70% -20%, #122134 0%, #0b0f14 55%),
-    #0b0f14;
+.hero {
+  padding: 56px 0;
+  background: radial-gradient(
+      1000px 700px at 70% -20%,
+      #122134 0%,
+      var(--bg) 55%
+    ),
+    var(--bg);
 }
-.card {
-  width: min(720px, 92%);
-  padding: 28px;
+.heroGrid {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+}
+.heroText {
+}
+.title {
+  margin: 0 0 10px;
+  font-size: 2.2rem;
+}
+.lead {
+  color: var(--muted);
+  font-size: 1.125rem;
+  margin-bottom: 20px;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.heroImage {
+  height: 280px;
   border-radius: 16px;
   background: linear-gradient(180deg, #11161c, #161c23);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.features {
+  padding: 40px 0;
+}
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.strip {
+  padding: 24px 0 40px;
+}
+.stripGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.imgPh {
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #11161c, #161c23);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  color: var(--muted);
+}
+
+.cta {
+  padding: 40px 0 64px;
+}
+.ctaCard {
+  padding: 28px;
+  border-radius: 16px;
+  text-align: center;
+  background: linear-gradient(180deg, #11161c, #161c23);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.ctaCard h2 {
+  margin: 0 0 8px;
+}
+.ctaCard p {
+  margin: 0 0 16px;
+  color: var(--muted);
 }

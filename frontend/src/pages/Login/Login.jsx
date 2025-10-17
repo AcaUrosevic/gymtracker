@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../lib/api";
 import { useAuth } from "../../security/AuthContext";
 import styles from "./Login.module.css";
+import { useToast } from "../../components/Toast/ToastContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ export default function Login() {
   const { setToken, setUser } = useAuth();
   const nav = useNavigate();
   const { state } = useLocation();
+  const { addToast } = useToast();
 
   function validate() {
     const u = username.trim();
@@ -51,9 +53,20 @@ export default function Login() {
         throw new Error("Neočekivan odgovor sa servera");
       setToken(token);
       setUser(user);
-      nav(state?.from?.pathname || "/", { replace: true });
+
+      addToast("Korisnicko ime i sifra su ispravni");
+
+      try {
+        nav(state?.from?.pathname || "/", { replace: true });
+      } catch {
+        setError("Ne moze da se otvori glavna forma i meni");
+      }
     } catch (err) {
-      setError(err?.response?.data?.message || "Neuspešna prijava");
+      const msg =
+        err?.response?.status === 400
+          ? "Korisnicko ime i sifra nisu ispravni."
+          : err?.response?.data?.message || "Neuspesna prijava";
+      setError(msg);
     } finally {
       setLoading(false);
     }
