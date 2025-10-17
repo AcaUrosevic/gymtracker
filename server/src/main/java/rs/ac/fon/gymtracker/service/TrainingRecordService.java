@@ -22,4 +22,10 @@ public interface TrainingRecordService extends BaseCrudService<TrainingRecord, L
     void deleteRecord(Long recordId);
 
     void deleteItem(TrainingRecordItemId itemId);
+
+    List<TrainingRecord> search(Long trainerId, Long memberId, Long exerciseId, LocalDate from, LocalDate to);
+
+    TrainingRecord updateRecord(Long id, LocalDate date, Long trainerId, Long memberId, List<ItemInput> items);
+
+    public record ItemInput(Long exerciseId, int sets, int reps, double weight) {}
 }
