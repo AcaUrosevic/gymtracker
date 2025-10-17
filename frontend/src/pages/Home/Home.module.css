@@ -13,8 +13,7 @@
   grid-template-columns: 1.1fr 1fr;
   align-items: center;
 }
-.heroText {
-}
+
 .title {
   margin: 0 0 10px;
   font-size: 2.2rem;
