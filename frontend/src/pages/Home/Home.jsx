@@ -51,11 +51,8 @@ export default function Home() {
                 Podaci o članstvu, status uplate, kontakt i istorija dolazaka.
               </p>
             </Card>
-            <Card
-              title="Izveštaji i statistika"
-              subtitle="Jasan uvid u podatke"
-            >
-              <p>Uvid u angažman trenera i trendove posećenosti.</p>
+            <Card title="Sertifikati" subtitle="Upravljanje akreditacijama">
+              <p>Dodaj, pretraži i ažuriraj sertifikate trenera.</p>
             </Card>
           </div>
         </Container>

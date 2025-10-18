@@ -28,6 +28,9 @@ export default function Navbar() {
       <NavLink to="/training-records" className={link}>
         Raspored
       </NavLink>
+      <NavLink to="/certificates" className={link}>
+        Sertifikati
+      </NavLink>
 
       <div className={styles.sep} />
       {user && (
