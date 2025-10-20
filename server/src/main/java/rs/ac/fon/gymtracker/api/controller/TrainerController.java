@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import rs.ac.fon.gymtracker.api.dto.TrainerCertificateDto;
 import rs.ac.fon.gymtracker.api.dto.TrainerDto;
-import rs.ac.fon.gymtracker.api.dto.TrainerWithCertsDto;
 import rs.ac.fon.gymtracker.api.mapper.TrainerCertificateMapper;
 import rs.ac.fon.gymtracker.api.mapper.TrainerMapper;
 import rs.ac.fon.gymtracker.infrastructure.security.JwtUtil;
@@ -42,14 +41,6 @@ public class TrainerController {
     public ResponseEntity<TrainerDto> get(@PathVariable Long id) {
         return service.findById(id).map(TrainerMapper::toDto)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/with-certificates")
-    public List<TrainerWithCertsDto> listWithCertificates() {
-        var trainers = service.findAll();
-        return trainers.stream()
-                .map(t -> TrainerMapper.toWithCertsDto(t, trainerCertificateService.listForTrainer(t.getId())))
-                .toList();
     }
 
     @GetMapping("/{id}/certificates")

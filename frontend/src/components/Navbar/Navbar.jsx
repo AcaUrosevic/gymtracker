@@ -26,7 +26,7 @@ export default function Navbar() {
         Članovi
       </NavLink>
       <NavLink to="/training-records" className={link}>
-        Raspored
+        Evidencije
       </NavLink>
       <NavLink to="/certificates" className={link}>
         Sertifikati

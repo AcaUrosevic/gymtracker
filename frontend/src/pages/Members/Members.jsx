@@ -168,7 +168,6 @@ export default function Members() {
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // ✅ OVO JE PRAVO MESTO ZA FLAG
   const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {

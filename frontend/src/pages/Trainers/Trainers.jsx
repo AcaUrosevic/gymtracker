@@ -11,7 +11,6 @@ import {
   listTrainerCertificates,
   assignTrainerCertificate,
   revokeTrainerCertificate,
-  listTrainersWithCertificates,
 } from "../../lib/trainerCertificatesApi";
 
 export default function Trainers() {
@@ -29,16 +28,15 @@ export default function Trainers() {
     (async () => {
       try {
         const [ts, cs] = await Promise.all([
-          listTrainersWithCertificates().catch(async () => {
+          (async () => {
             const pure = await listTrainers();
-            const rows = await Promise.all(
+            return Promise.all(
               pure.map(async (t) => ({
                 ...t,
                 certificates: await listTrainerCertificates(t.id),
               }))
             );
-            return rows;
-          }),
+          })(),
           listCertificates(),
         ]);
         setTrainers(ts || []);

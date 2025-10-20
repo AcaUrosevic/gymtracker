@@ -91,3 +91,36 @@
   margin: 0 0 16px;
   color: var(--muted);
 }
+
+.heroImage {
+  position: relative;
+  height: 280px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #11161c, #161c23);
+  /* border: 1px dashed rgba(255, 255, 255, 0.15);  -- ukloni dashed okvir */
+  overflow: hidden; /* <— bitno da ne "viri" slika */
+}
+
+.heroImgEl {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- feature slike unutar kartica --- */
+.featureImageWrap {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  /* zadrži stabilan odnos stranica tako da mreža ne skače */
+  aspect-ratio: 16 / 9; /* može i 4 / 3 ako ti više leži */
+  background: linear-gradient(180deg, #11161c, #161c23);
+}
+
+.featureImg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
