@@ -39,7 +39,7 @@ public class TrainingRecordItem {
 
     /** Glava treninga – mapira deo ključa 'record_id'. */
     @NotNull
-    @MapsId("recordId") // povezuje id.recordId sa FK kolonom
+    @MapsId("recordId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "record_id", nullable = false)
     private TrainingRecord record;
