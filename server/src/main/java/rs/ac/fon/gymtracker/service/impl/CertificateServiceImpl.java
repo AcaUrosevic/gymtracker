@@ -22,8 +22,4 @@ public class CertificateServiceImpl
         if (patch.getType() != null) current.setType(patch.getType());
         return repo.save(current);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Certificate> findByName(String name) { return repo.findByName(name); }
 }

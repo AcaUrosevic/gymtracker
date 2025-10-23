@@ -45,6 +45,7 @@ class MemberTest {
         m.setFirstName(null);
         var result = validator().validate(m);
         assertFalse(result.isEmpty());
+        assertTrue(result.size() == 1, "Value must be stored");
         assertTrue(hasViolation(result, "firstName", "must not be blank"));
     }
 

@@ -21,9 +21,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>, JpaSpecif
     Optional<Member> findById(@NonNull Long id);
 
     @EntityGraph(attributePaths = {"servicePackage"})
-    Optional<Member> findByEmail(String email);
-
-    @EntityGraph(attributePaths = {"servicePackage"})
     @NonNull
     List<Member> findAll(@Nullable Specification<Member> spec);
 }

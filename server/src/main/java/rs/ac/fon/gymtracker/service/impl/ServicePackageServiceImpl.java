@@ -24,10 +24,4 @@ public class ServicePackageServiceImpl
         if (patch.getPrice() > 0)           current.setPrice(patch.getPrice());
         return repo.save(current);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<ServicePackage> findByName(String name) {
-        return repo.findByName(name);
-    }
 }

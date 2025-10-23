@@ -19,18 +19,18 @@ function CertificateForm({ onSaved, onCancel, loading }) {
     setEType("");
 
     if (!name.trim()) {
-      setEName("Назив је обавезан.");
+      setEName("Naziv je obavezan.");
       ok = false;
     } else if (name.trim().length > 120) {
-      setEName("Макс. 120 карактера.");
+      setEName("Max 120 karaktera.");
       ok = false;
     }
 
     if (!type.trim()) {
-      setEType("Тип је обавезан.");
+      setEType("Tip je obavezan.");
       ok = false;
     } else if (type.trim().length > 80) {
-      setEType("Макс. 80 карактера.");
+      setEType("Max 80 karaktera.");
       ok = false;
     }
 
@@ -48,7 +48,7 @@ function CertificateForm({ onSaved, onCancel, loading }) {
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       <label className={styles.label}>
-        Назив сертификата
+        Naziv sertifikata
         <input
           className={styles.input}
           value={name}
@@ -57,7 +57,7 @@ function CertificateForm({ onSaved, onCancel, loading }) {
         {eName && <span className={styles.fieldError}>{eName}</span>}
       </label>
       <label className={styles.label}>
-        Тип / област
+        Tip / oblast
         <input
           className={styles.input}
           value={type}
@@ -68,10 +68,10 @@ function CertificateForm({ onSaved, onCancel, loading }) {
 
       <div className={styles.row}>
         <Button variant="ghost" type="button" onClick={onCancel}>
-          Откажи
+          Otkaži
         </Button>
         <Button type="submit" disabled={loading}>
-          {loading ? "Снимање…" : "Убаци сертификат"}
+          {loading ? "Snimanje…" : "Ubaci sertifikat"}
         </Button>
       </div>
     </form>
@@ -90,7 +90,7 @@ export default function Certificates() {
         const data = await listCertificates();
         setCerts(data);
       } catch {
-        addToast("Не могу да учитам податке о сертификатима.", {
+        addToast("Ne mogu da učitam sertifikat.", {
           duration: 3000,
         });
       }
@@ -103,9 +103,9 @@ export default function Certificates() {
       const saved = await createCertificate(payload);
       setCerts((cs) => [saved, ...cs]);
       setShowForm(false);
-      addToast("Систем је запамтио сертификат.");
+      addToast("Sistem je zapamtio sertifikat.");
     } catch {
-      addToast("Систем не може да запамти сертификат.", { duration: 3000 });
+      addToast("Sistem ne može da zapamti sertifikat.", { duration: 3000 });
     } finally {
       setLoadingCreate(false);
     }
@@ -115,30 +115,30 @@ export default function Certificates() {
     <section className={styles.page}>
       <Container>
         <div className={styles.grid}>
-          <Card title="Сертификати">
+          <Card title="Sertifikati">
             <div className={styles.list}>
               {certs.map((c) => (
                 <div key={c.id} className={styles.rowItem}>
                   <div>
                     <div className={styles.name}>{c.name}</div>
-                    <div className={styles.meta}>Тип: {c.type}</div>
+                    <div className={styles.meta}>Tip: {c.type}</div>
                   </div>
                 </div>
               ))}
               {certs.length === 0 && (
-                <div className={styles.empty}>Још нема сертификата.</div>
+                <div className={styles.empty}>Još nema sertifikata.</div>
               )}
             </div>
           </Card>
 
-          <Card title="Убаци сертификат">
+          <Card title="Ubaci sertifikat">
             {!showForm ? (
               <Button
                 as="button"
                 type="button"
                 onClick={() => setShowForm(true)}
               >
-                Нови сертификат
+                Novi sertifikat
               </Button>
             ) : (
               <CertificateForm
