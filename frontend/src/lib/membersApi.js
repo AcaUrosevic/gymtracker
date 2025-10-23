@@ -1,5 +1,19 @@
 import api from "./api";
 
+export async function createMember(payload) {
+  const res = await api.post("/members", payload);
+  return res.data;
+}
+
+export async function updateMember(id, payload) {
+  const res = await api.put(`/members/${id}`, payload);
+  return res.data;
+}
+
+export async function deleteMember(id) {
+  await api.delete(`/members/${id}`);
+}
+
 export async function listPackages() {
   const res = await api.get("/packages");
   return res.data;
@@ -15,18 +29,4 @@ export async function searchMembers(q = "", packageId = null) {
   }`;
   const res = await api.get(url);
   return res.data || [];
-}
-
-export async function createMember(payload) {
-  const res = await api.post("/members", payload);
-  return res.data;
-}
-
-export async function updateMember(id, payload) {
-  const res = await api.put(`/members/${id}`, payload);
-  return res.data;
-}
-
-export async function deleteMember(id) {
-  await api.delete(`/members/${id}`);
 }

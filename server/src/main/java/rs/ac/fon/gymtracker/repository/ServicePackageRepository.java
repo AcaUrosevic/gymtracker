@@ -6,5 +6,4 @@ import rs.ac.fon.gymtracker.domain.*;
 import java.util.Optional;
 
 public interface ServicePackageRepository extends JpaRepository<ServicePackage, Long> {
-    Optional<ServicePackage> findByName(String name);
 }

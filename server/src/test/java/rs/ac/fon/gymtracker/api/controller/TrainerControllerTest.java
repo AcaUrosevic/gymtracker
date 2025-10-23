@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import rs.ac.fon.gymtracker.api.error.GlobalExceptionHandler;
 import rs.ac.fon.gymtracker.domain.Trainer;
 import rs.ac.fon.gymtracker.infrastructure.security.JwtUtil;
+import rs.ac.fon.gymtracker.service.TrainerCertificateService;
 import rs.ac.fon.gymtracker.service.TrainerService;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -22,13 +23,14 @@ class TrainerControllerTest {
 
     @Mock private TrainerService service;
     @Mock private JwtUtil jwtUtil;
+    @Mock private TrainerCertificateService trainerCertificateService;
 
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        var controller = new TrainerController(service, jwtUtil);
+        var controller = new TrainerController(service, jwtUtil,trainerCertificateService);
         mvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build();

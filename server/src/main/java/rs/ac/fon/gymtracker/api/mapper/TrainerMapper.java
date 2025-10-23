@@ -19,5 +19,4 @@ public final class TrainerMapper {
         e.setUsername(dto.username());
         return e;
     }
-
 }

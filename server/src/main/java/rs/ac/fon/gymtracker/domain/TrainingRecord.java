@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Jedan odrađen trening: datum, trener, član i izračunati intenzitet (AVL).
@@ -52,5 +54,5 @@ public class TrainingRecord {
     private Member member;
 
     @OneToMany(mappedBy = "record", cascade = CascadeType.ALL, orphanRemoval = true)
-    private java.util.List<TrainingRecordItem> items = new java.util.ArrayList<>();
+    private List<TrainingRecordItem> items = new ArrayList<>();
 }

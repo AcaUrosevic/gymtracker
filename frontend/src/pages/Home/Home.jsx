@@ -3,6 +3,12 @@ import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import styles from "./Home.module.css";
 
+// === SLIKE KOJE IMAŠ ===
+import heroImg from "../../assets/images/hero.png";
+import featureRecordsImg from "../../assets/images/feature-records.png";
+import featureMembersImg from "../../assets/images/feature-members.png";
+import featureTrainersImg from "../../assets/images/feature-trainers.png";
+
 export default function Home() {
   return (
     <>
@@ -12,12 +18,12 @@ export default function Home() {
             <div className={styles.heroText}>
               <h1 className={styles.title}>Sve za teretanu na jednom mestu</h1>
               <p className={styles.lead}>
-                Upravljaj trenerima, članovima i rasporedima — brzo, jasno i bez
-                papirologije.
+                Upravljaj trenerima, članovima i evidencijama treninga — brzo,
+                jasno i bez papirologije.
               </p>
               <div className={styles.actions}>
                 <Button as="a" href="/trainers">
-                  Pogledaj trenere
+                  Lista trenera
                 </Button>
                 <Button as="a" href="/members" variant="ghost">
                   Lista članova
@@ -25,11 +31,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div
-              className={styles.heroImage}
-              aria-label="hero image placeholder"
-            >
-              <span>Ovde ubaciti glavnu sliku (1920×1080)</span>
+            <div className={styles.heroImage} aria-label="glavna ilustracija">
+              <img
+                src={heroImg}
+                alt="Digitalna ilustracija: menadžment teretane u tamnom stilu sajta"
+                className={styles.heroImgEl}
+                loading="eager"
+                decoding="async"
+              />
             </div>
           </div>
         </Container>
@@ -39,40 +48,55 @@ export default function Home() {
         <Container>
           <div className={styles.grid}>
             <Card
-              title="Planiranje treninga"
-              subtitle="Brzo zakazivanje i pregled"
+              title="Evidencije treninga"
+              subtitle="Kreiranje, pretraga i izmena"
             >
+              <div className={styles.featureImageWrap}>
+                <img
+                  src={featureRecordsImg}
+                  alt=""
+                  className={styles.featureImg}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
               <p>
-                Kreiraj termine, dodeli trenere i prati popunjenost dvorane.
+                Vodi evidenciju po treneru, članu, vežbi i datumu. Dodaj stavke
+                sa serijama, ponavljanjima i težinama — sve na jednom mestu.
               </p>
             </Card>
-            <Card title="Evidencija članova" subtitle="Sve informacije na klik">
-              <p>
-                Podaci o članstvu, status uplate, kontakt i istorija dolazaka.
-              </p>
-            </Card>
-            <Card
-              title="Izveštaji i statistika"
-              subtitle="Jasan uvid u podatke"
-            >
-              <p>Uvid u angažman trenera i trendove posećenosti.</p>
-            </Card>
-          </div>
-        </Container>
-      </section>
 
-      <section className={styles.strip}>
-        <Container>
-          <div className={styles.stripGrid}>
-            <div className={styles.imgPh}>
-              <span>Slika #1 (4:3)</span>
-            </div>
-            <div className={styles.imgPh}>
-              <span>Slika #2 (4:3)</span>
-            </div>
-            <div className={styles.imgPh}>
-              <span>Slika #3 (4:3)</span>
-            </div>
+            <Card title="Članovi" subtitle="Sve informacije na klik">
+              <div className={styles.featureImageWrap}>
+                <img
+                  src={featureMembersImg}
+                  alt=""
+                  className={styles.featureImg}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p>
+                Podaci o članstvu, kontakt, paketi usluga i istorija treninga u
+                jasnom prikazu.
+              </p>
+            </Card>
+
+            <Card title="Treneri" subtitle="Tim na dlanu">
+              <div className={styles.featureImageWrap}>
+                <img
+                  src={featureTrainersImg}
+                  alt=""
+                  className={styles.featureImg}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p>
+                Sertifikati trenera pod kontrolom. Brzo dodaj, ažuriraj i prati
+                akreditacije trenera.
+              </p>
+            </Card>
           </div>
         </Container>
       </section>
@@ -81,11 +105,11 @@ export default function Home() {
         <Container>
           <div className={styles.ctaCard}>
             <h2>Spreman za organizovanije treninge?</h2>
-            <p>Zapocni sa evidencijom i planiranjem u par klikova.</p>
+            <p>Započni sa evidencijama i planiranjem u par klikova.</p>
 
             <div className={styles.actions}>
               <Button as="a" href="/training-records">
-                Otvori raspored
+                Otvori evidencije
               </Button>
               <Button as="a" href="/about" variant="ghost">
                 Saznaj više

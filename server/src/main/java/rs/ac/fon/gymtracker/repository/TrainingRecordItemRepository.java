@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TrainingRecordItemRepository extends JpaRepository<TrainingRecordItem, TrainingRecordItemId> {
     List<TrainingRecordItem> findByRecord_Id(Long recordId);
+    void deleteByRecord_Id(Long recordId);
 }
